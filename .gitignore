@@ -3,3 +3,5 @@ __pycache__/
 *.pyc
 .vscode/
 data/processed/
+.venv/
+test_upload.txt
