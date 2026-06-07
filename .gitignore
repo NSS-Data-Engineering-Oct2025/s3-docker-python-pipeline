@@ -5,3 +5,5 @@ __pycache__/
 data/processed/
 .venv/
 test_upload.txt
+data/raw/
+data/processed/
