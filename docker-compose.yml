@@ -1,0 +1,14 @@
+services:
+  nyc-taxi-pipeline:
+    build: .
+    container_name: nyc-taxi-pipeline
+
+    volumes:
+      - ./data:/app/data
+      - C:/Users/amerk/.aws:/root/.aws:ro
+
+    environment:
+      - AWS_PROFILE=zia-u-rahman.amerkhill
+      - AWS_REGION=us-east-2
+
+    command: python src/main.py
