@@ -7,3 +7,9 @@ data/processed/
 test_upload.txt
 data/raw/
 data/processed/
+.venv
+.git
+data/raw
+data/processed
+__pycache__
+*.pyc
