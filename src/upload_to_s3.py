@@ -19,7 +19,6 @@ def upload_processed_files_to_s3():
             s3_key = f"{S3_PREFIX}/processed/{file_name}"
 
             print(f"Uploading {local_file_path} to s3://{S3_BUCKET}/{s3_key}")
-
             s3_client.upload_file(local_file_path, S3_BUCKET, s3_key)
 
     print("Upload complete.")
