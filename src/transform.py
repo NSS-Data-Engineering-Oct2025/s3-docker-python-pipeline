@@ -6,7 +6,7 @@ from config import RAW_TAXI_FILE, PROCESSED_FOLDER
 
 def transform_taxi_data():
     """
-    Read raw NYC Taxi parquet data, clean it, and create summary output files.
+    Read raw NYC Taxi parquet data, clean it, and create processed output files.
     """
 
     os.makedirs(PROCESSED_FOLDER, exist_ok=True)
@@ -38,6 +38,7 @@ def transform_taxi_data():
     ]
 
     taxi_data["pickup_date"] = taxi_data["tpep_pickup_datetime"].dt.date
+
     taxi_data["trip_duration_minutes"] = (
         taxi_data["tpep_dropoff_datetime"] - taxi_data["tpep_pickup_datetime"]
     ).dt.total_seconds() / 60
@@ -47,11 +48,13 @@ def transform_taxi_data():
         & (taxi_data["trip_duration_minutes"] <= 180)
     ]
 
-    cleaned_file = f"{PROCESSED_FOLDER}/cleaned_taxi_trips.csv"
+    cleaned_csv_file = f"{PROCESSED_FOLDER}/cleaned_taxi_trips.csv"
+    cleaned_parquet_file = f"{PROCESSED_FOLDER}/cleaned_taxi_trips.parquet"
     daily_summary_file = f"{PROCESSED_FOLDER}/daily_trip_summary.csv"
     payment_summary_file = f"{PROCESSED_FOLDER}/payment_type_summary.csv"
 
-    taxi_data.to_csv(cleaned_file, index=False)
+    taxi_data.to_csv(cleaned_csv_file, index=False)
+    taxi_data.to_parquet(cleaned_parquet_file, index=False)
 
     daily_summary = (
         taxi_data.groupby("pickup_date")
@@ -82,7 +85,8 @@ def transform_taxi_data():
 
     print(f"Cleaned rows: {len(taxi_data)}")
     print("Processed files created:")
-    print(cleaned_file)
+    print(cleaned_csv_file)
+    print(cleaned_parquet_file)
     print(daily_summary_file)
     print(payment_summary_file)
 

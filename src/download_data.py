@@ -5,11 +5,13 @@ from config import TAXI_DATA_URL, RAW_TAXI_FILE
 
 
 def download_taxi_data():
-    """
-    Download NYC Taxi data and save it locally.
-    """
 
     os.makedirs("data/raw", exist_ok=True)
+
+    if os.path.exists(RAW_TAXI_FILE):
+        print(f"File already exists: {RAW_TAXI_FILE}")
+        print("Skipping download...")
+        return
 
     print("Downloading NYC Taxi dataset...")
 
