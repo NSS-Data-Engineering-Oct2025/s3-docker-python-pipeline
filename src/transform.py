@@ -2,11 +2,13 @@ import os
 import pandas as pd
 
 from config import RAW_TAXI_FILE, PROCESSED_FOLDER
+from data_quality import run_data_quality_checks
 
 
 def transform_taxi_data():
     """
-    Read raw NYC Taxi parquet data, clean it, and create processed output files.
+    Read raw NYC Taxi parquet data, clean it, run data quality checks,
+    and create processed output files.
     """
 
     os.makedirs(PROCESSED_FOLDER, exist_ok=True)
@@ -14,7 +16,8 @@ def transform_taxi_data():
     print("Reading raw taxi data...")
     taxi_data = pd.read_parquet(RAW_TAXI_FILE)
 
-    print(f"Raw rows: {len(taxi_data)}")
+    raw_rows = len(taxi_data)
+    print(f"Raw rows: {raw_rows}")
 
     selected_columns = [
         "tpep_pickup_datetime",
@@ -47,6 +50,8 @@ def transform_taxi_data():
         (taxi_data["trip_duration_minutes"] > 0)
         & (taxi_data["trip_duration_minutes"] <= 180)
     ]
+
+    run_data_quality_checks(raw_rows, taxi_data)
 
     cleaned_csv_file = f"{PROCESSED_FOLDER}/cleaned_taxi_trips.csv"
     cleaned_parquet_file = f"{PROCESSED_FOLDER}/cleaned_taxi_trips.parquet"
