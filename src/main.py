@@ -1,25 +1,25 @@
 from download_data import download_taxi_data
 from transform import transform_taxi_data
 from upload_to_s3 import upload_processed_files_to_s3
+from logger import get_logger
+
+logger = get_logger()
 
 
 def run_pipeline():
-    """
-    Run the full NYC Taxi ETL pipeline.
-    """
 
-    print("Starting NYC Taxi ETL Pipeline...")
+    logger.info("Starting NYC Taxi ETL Pipeline")
 
-    print("Step 1: Downloading raw data...")
+    logger.info("Step 1: Downloading data")
     download_taxi_data()
 
-    print("Step 2: Transforming data...")
+    logger.info("Step 2: Transforming data")
     transform_taxi_data()
 
-    print("Step 3: Uploading processed files to S3...")
+    logger.info("Step 3: Uploading files to AWS S3")
     upload_processed_files_to_s3()
 
-    print("Pipeline completed successfully.")
+    logger.info("Pipeline completed successfully")
 
 
 if __name__ == "__main__":
