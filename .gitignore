@@ -1,15 +1,28 @@
+# Environment files
 .env
+.venv/
+
+# Python cache
 __pycache__/
 *.pyc
+*.pyo
+
+# VS Code settings
 .vscode/
-data/processed/
-.venv/
-test_upload.txt
+
+# Git
+.git/
+
+# Project data
 data/raw/
 data/processed/
-.venv
-.git
-data/raw
-data/processed
-__pycache__
-*.pyc
+
+# Temporary files
+test_upload.txt
+
+# Logs
+logs/
+
+# Operating System files
+.DS_Store
+Thumbs.db
