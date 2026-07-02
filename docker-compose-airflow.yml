@@ -50,6 +50,11 @@ services:
       PYTHONPATH: /opt/airflow/project/src
       AWS_PROFILE: zia-u-rahman.amerkhill
       AWS_DEFAULT_REGION: us-east-2
+      POSTGRES_USER: taxi_user
+      POSTGRES_PASSWORD: taxi_password
+      POSTGRES_HOST: host.docker.internal
+      POSTGRES_PORT: 5435
+      POSTGRES_DB: taxi_db
     volumes:
       - ./airflow/dags:/opt/airflow/dags
       - ./airflow/logs:/opt/airflow/logs
@@ -75,6 +80,11 @@ services:
       PYTHONPATH: /opt/airflow/project/src
       AWS_PROFILE: zia-u-rahman.amerkhill
       AWS_DEFAULT_REGION: us-east-2
+      POSTGRES_USER: taxi_user
+      POSTGRES_PASSWORD: taxi_password
+      POSTGRES_HOST: host.docker.internal
+      POSTGRES_PORT: 5435
+      POSTGRES_DB: taxi_db
     volumes:
       - ./airflow/dags:/opt/airflow/dags
       - ./airflow/logs:/opt/airflow/logs

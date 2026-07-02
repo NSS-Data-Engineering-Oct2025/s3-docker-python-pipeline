@@ -10,6 +10,7 @@ sys.path.append("/opt/airflow/project/src")
 from download_data import download_taxi_data
 from transform import transform_taxi_data
 from upload_to_s3 import upload_processed_files_to_s3
+from load_to_postgres import load_cleaned_taxi_data_to_postgres
 
 
 def validate_processed_outputs():
@@ -40,12 +41,12 @@ default_args = {
 
 with DAG(
     dag_id="nyc_taxi_etl_pipeline",
-    description="NYC Taxi ETL pipeline using Python, Docker, Airflow, and AWS S3",
+    description="NYC Taxi ETL pipeline using Python, Docker, Airflow, AWS S3, and PostgreSQL",
     default_args=default_args,
     start_date=datetime(2026, 1, 1),
     schedule=None,
     catchup=False,
-    tags=["nyc-taxi", "etl", "s3"],
+    tags=["nyc-taxi", "etl", "s3", "postgres"],
 ) as dag:
 
     download_task = PythonOperator(
@@ -68,4 +69,9 @@ with DAG(
         python_callable=upload_processed_files_to_s3,
     )
 
-    download_task >> transform_task >> validate_outputs_task >> upload_task
+    load_postgres_task = PythonOperator(
+        task_id="load_cleaned_data_to_postgres",
+        python_callable=load_cleaned_taxi_data_to_postgres,
+    )
+
+    download_task >> transform_task >> validate_outputs_task >> upload_task >> load_postgres_task

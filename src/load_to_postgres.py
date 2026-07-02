@@ -1,12 +1,13 @@
+import os
 import pandas as pd
 from sqlalchemy import create_engine
 
 
-POSTGRES_USER = "taxi_user"
-POSTGRES_PASSWORD = "taxi_password"
-POSTGRES_HOST = "localhost"
-POSTGRES_PORT = "5435"
-POSTGRES_DB = "taxi_db"
+POSTGRES_USER = os.getenv("POSTGRES_USER", "taxi_user")
+POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "taxi_password")
+POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
+POSTGRES_PORT = os.getenv("POSTGRES_PORT", "5435")
+POSTGRES_DB = os.getenv("POSTGRES_DB", "taxi_db")
 
 PARQUET_FILE = "data/processed/cleaned_taxi_trips.parquet"
 
